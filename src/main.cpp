@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 
 #include "Product.h"
@@ -5,16 +6,15 @@
 #include "Customer.h"
 #include "Order.h"
 #include "Warehouse.h"
+#include "Truck.h"
+#include "DeliveryManager.h"
 
 int main()
 {
-    // Create a product
+    // Create product
     Product phone(1, "iPhone 16", "Apple");
 
-    // Create an order item
-    OrderItem item(phone, 2);
-
-    // Create a customer
+    // Create customer
     Customer customer(
         1,
         "Jazz",
@@ -22,32 +22,71 @@ int main()
         "IIT Hyderabad"
     );
 
-    // Create a list of order items
+    // Create manager and truck
+    DeliveryManager manager(1);
+    Truck truck(1, 5);
+
+    manager.addCustomer(&customer);
+    manager.addTruck(&truck);
+
+    // Add stock to warehouse through manager
+    manager.addStock(phone, 20);
+
+    // Create order items
     std::vector<OrderItem> items;
-    items.push_back(item);
+    items.emplace_back(phone, 2);
 
-    // Create an order
-    Order order(
-        1,
-        &customer,
-        items,
-        customer.getAddress()
-    );
-
-    // Save order in customer's history
-    customer.addOrder(&order);
-
-    // Create warehouse
-    Warehouse warehouse(1);
-
-    // Add stock
-    warehouse.addStock(phone, 20);
-
-    // Check stock
-    if (warehouse.hasStock(phone, 2))
+    // Place order
+    if (!manager.placeOrder(&customer, items))
     {
-        warehouse.removeStock(phone, 2);
+        std::cout << "Order placement failed.\n";
+        return 0;
     }
+
+    std::cout << "Order placed successfully!\n";
+
+    // Get the created order
+    Order* order = customer.getOrders()[0];
+
+    // Approve it
+    manager.approveOrder(order);
+
+    std::cout << "Order approved!\n";
+
+    // Assign to truck
+    manager.assignOrdersToTruck(&truck);
+
+    std::cout << "Truck now has "
+              << truck.getOrders().size()
+              << " order(s).\n";
+
+    // Print final status
+    std::cout << "Final Order Status: ";
+
+    switch (order->getStatus())
+    {
+        case Status::Pending:
+            std::cout << "Pending";
+            break;
+
+        case Status::Approved:
+            std::cout << "Approved";
+            break;
+
+        case Status::InTruck:
+            std::cout << "InTruck";
+            break;
+
+        case Status::Delivered:
+            std::cout << "Delivered";
+            break;
+
+        case Status::Cancelled:
+            std::cout << "Cancelled";
+            break;
+    }
+
+    std::cout << '\n';
 
     return 0;
 }
