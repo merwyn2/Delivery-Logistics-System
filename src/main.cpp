@@ -30,7 +30,7 @@ int main()
     manager.addTruck(&truck);
 
     // Add stock to warehouse through manager
-    manager.addStock(phone, 20);
+    // manager.addStock(phone, 20);*********S
 
     // Create order items
     std::vector<OrderItem> items;
@@ -88,5 +88,28 @@ int main()
 
     std::cout << '\n';
 
-    return 0;
+    // return 0;
 }
+// #include <iostream>
+
+// #include "Warehouse.h"
+// #include "Product.h"
+
+// int main()
+// {
+//     Product phone(1, "iPhone 16", "Apple");
+
+//     Warehouse warehouse(1);
+
+//     warehouse.addStock(phone, 20);
+
+//     warehouse.saveStock();
+
+//     Warehouse warehouse2(2);
+
+//     warehouse2.loadStock();
+
+//     std::cout << warehouse2.getStock(phone) << '\n';
+
+//     return 0;
+// }

@@ -16,4 +16,7 @@ public:
     bool hasStock(const Product& product, int quantity) const;
     void removeStock(const Product& product, int quantity);
     int getStock(const Product& product) const;
+private:
+    void saveStock() const;
+    void loadStock();
 };
