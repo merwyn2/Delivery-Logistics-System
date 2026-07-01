@@ -1,0 +1,8 @@
+1 iPhone16 Apple
+2 GalaxyS25 Samsung
+3 Pixel10 Google
+4 MacBookAir Apple
+5 Pixel10Pro Google
+6 ThinkPadLenovo Lenovo
+7 GalaxyTab Samsung
+8 AirPodsPro Apple

@@ -1,18 +1,24 @@
 #include <iostream>
 #include <vector>
 
-#include "Product.h"
-#include "OrderItem.h"
-#include "Customer.h"
-#include "Order.h"
-#include "Warehouse.h"
-#include "Truck.h"
 #include "DeliveryManager.h"
+#include "Truck.h"
+#include "Customer.h"
+#include "OrderItem.h"
 
 int main()
 {
-    // Create product
-    Product phone(1, "iPhone 16", "Apple");
+    // Create manager
+    DeliveryManager manager(1);
+
+    // Load product from catalog
+    Product* phone = manager.getProduct(1);
+
+    if (phone == nullptr)
+    {
+        std::cout << "Product not found.\n";
+        return 1;
+    }
 
     // Create customer
     Customer customer(
@@ -22,19 +28,15 @@ int main()
         "IIT Hyderabad"
     );
 
-    // Create manager and truck
-    DeliveryManager manager(1);
+    // Create truck
     Truck truck(1, 5);
 
     manager.addCustomer(&customer);
     manager.addTruck(&truck);
 
-    // Add stock to warehouse through manager
-    // manager.addStock(phone, 20);*********S
-
     // Create order items
     std::vector<OrderItem> items;
-    items.emplace_back(phone, 2);
+    items.emplace_back(*phone, 2);
 
     // Place order
     if (!manager.placeOrder(&customer, items))
@@ -45,10 +47,10 @@ int main()
 
     std::cout << "Order placed successfully!\n";
 
-    // Get the created order
+    // Get created order
     Order* order = customer.getOrders()[0];
 
-    // Approve it
+    // Approve order
     manager.approveOrder(order);
 
     std::cout << "Order approved!\n";
@@ -88,28 +90,5 @@ int main()
 
     std::cout << '\n';
 
-    // return 0;
+    return 0;
 }
-// #include <iostream>
-
-// #include "Warehouse.h"
-// #include "Product.h"
-
-// int main()
-// {
-//     Product phone(1, "iPhone 16", "Apple");
-
-//     Warehouse warehouse(1);
-
-//     warehouse.addStock(phone, 20);
-
-//     warehouse.saveStock();
-
-//     Warehouse warehouse2(2);
-
-//     warehouse2.loadStock();
-
-//     std::cout << warehouse2.getStock(phone) << '\n';
-
-//     return 0;
-// }

@@ -5,6 +5,7 @@
 #include "Warehouse.h"
 #include "Customer.h"
 #include "Order.h"
+#include "ProductCatalog.h"
 
 class Truck;
 
@@ -15,9 +16,11 @@ private:
     std::vector<Customer*> customers;
     std::vector<Order*> orders;
     std::vector<Truck*> trucks;
+    ProductCatalog catalog;
 
 public:
     DeliveryManager(int warehouseID);
+    Product* getProduct(int productID);
     void addStock(const Product& product, int quantity);
     void addCustomer(Customer* customer);
     void addTruck(Truck* truck);
@@ -28,4 +31,5 @@ public:
     void approveOrder(Order* order);
 
     void assignOrdersToTruck(Truck* truck);
+
 };

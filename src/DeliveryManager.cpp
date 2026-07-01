@@ -48,6 +48,11 @@ bool DeliveryManager::placeOrder(Customer* customer,
     return true;
 }
 
+Product* DeliveryManager::getProduct(int productID)
+{
+    return catalog.getProduct(productID);
+}
+
 void DeliveryManager::approveOrder(Order* order)
 {
     order->setStatus(Status::Approved);
