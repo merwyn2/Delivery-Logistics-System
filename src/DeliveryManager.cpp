@@ -11,12 +11,28 @@ void DeliveryManager::addStock(const Product& product, int quantity)
 }
 void DeliveryManager::addCustomer(Customer* customer)
 {
-    customers.push_back(customer);
+    customerCatalog.addCustomer(customer);
+}
+
+void DeliveryManager::registerCustomer(int id,
+                                       const std::string& name,
+                                       const std::string& contact,
+                                       const std::string& address)
+{
+    Customer* customer =
+        new Customer(id, name, contact, address);
+
+    customerCatalog.addCustomer(customer);
 }
 
 void DeliveryManager::addTruck(Truck* truck)
 {
     trucks.push_back(truck);
+}
+
+Customer* DeliveryManager::getCustomer(int customerID)
+{
+    return customerCatalog.getCustomer(customerID);
 }
 
 bool DeliveryManager::placeOrder(Customer* customer,

@@ -58,7 +58,8 @@ void Warehouse::loadStock()
 {
     std::ifstream in("data/warehouse.txt");
 
-    if(!in){
+    if(!in)
+    {
         return;
     }
 
