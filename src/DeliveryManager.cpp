@@ -2,9 +2,11 @@
 #include "Truck.h"
 
 DeliveryManager::DeliveryManager(int warehouseID)
-    : warehouse(warehouseID)
+    : warehouse(warehouseID),
+      orderCatalog(&customerCatalog, &catalog)
 {
 }
+
 void DeliveryManager::addStock(const Product& product, int quantity)
 {
     warehouse.addStock(product, quantity);
@@ -61,6 +63,8 @@ bool DeliveryManager::placeOrder(Customer* customer,
     orders.push_back(order);
     customer->addOrder(order);
 
+    orderCatalog.addOrder(order);
+
     return true;
 }
 
@@ -84,4 +88,9 @@ void DeliveryManager::assignOrdersToTruck(Truck* truck)
                 break;
         }
     }
+}
+
+Order* DeliveryManager::getOrder(int orderID)
+{
+    return orderCatalog.getOrder(orderID);
 }

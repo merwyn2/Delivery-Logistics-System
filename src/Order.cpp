@@ -4,15 +4,15 @@
 Order::Order(int id,
              Customer* customer,
              const std::vector<OrderItem>& items,
-             const std::string& deliveryAddress)
+             const std::string& deliveryAddress,
+             Status status)
     : orderID(id),
       customer(customer),
       items(items),
       deliveryAddress(deliveryAddress),
-      status(Status::Pending)
+      status(status)
 {
 }
-
 int Order::getOrderID() const
 {
     return orderID;

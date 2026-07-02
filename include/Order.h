@@ -27,9 +27,10 @@ private:
 
 public:
     Order(int id,
-          Customer* customer,
-          const std::vector<OrderItem>& items,
-          const std::string& deliveryAddress);
+      Customer* customer,
+      const std::vector<OrderItem>& items,
+      const std::string& deliveryAddress,
+      Status status = Status::Pending);
 
     int getOrderID() const;
     Customer* getCustomer() const;

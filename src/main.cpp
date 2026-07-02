@@ -1,87 +1,45 @@
 #include <iostream>
-#include <vector>
 
 #include "DeliveryManager.h"
-#include "Truck.h"
 #include "OrderItem.h"
+#include "OrderUtils.h"
 
 int main()
 {
     DeliveryManager manager(1);
 
-    // Load customer from CustomerCatalog
-    Customer* customer = manager.getCustomer(1);
+    Order* order = manager.getOrder(1);
 
-    if (customer == nullptr)
+    if (order == nullptr)
     {
-        std::cout << "Customer not found.\n";
-        return 1;
+        std::cout << "FAILED\n";
+        return 0;
     }
 
-    // Load product from ProductCatalog
-    Product* phone = manager.getProduct(1);
+    std::cout << "Order ID : "
+              << order->getOrderID()
+              << '\n';
 
-    if (phone == nullptr)
+    std::cout << "Customer : "
+              << order->getCustomer()->getName()
+              << '\n';
+
+    std::cout << "Address : "
+              << order->getDeliveryAddress()
+              << '\n';
+
+    std::cout << "Status : "
+              << statusToString(order->getStatus())
+              << '\n';
+
+    std::cout << "\nItems\n";
+
+    for (const OrderItem& item : order->getItems())
     {
-        std::cout << "Product not found.\n";
-        return 1;
+        std::cout
+            << item.getProduct().getName()
+            << " x "
+            << item.getQuantity()
+            << '\n';
     }
-
-    // Create truck
-    Truck truck(1, 5);
-
-    manager.addTruck(&truck);
-
-    // Create order
-    std::vector<OrderItem> items;
-    items.emplace_back(*phone, 2);
-
-    if (!manager.placeOrder(customer, items))
-    {
-        std::cout << "Order placement failed.\n";
-        return 1;
-    }
-
-    std::cout << "Order placed successfully!\n";
-
-    Order* order = customer->getOrders()[0];
-
-    manager.approveOrder(order);
-
-    std::cout << "Order approved!\n";
-
-    manager.assignOrdersToTruck(&truck);
-
-    std::cout << "Truck now has "
-              << truck.getOrders().size()
-              << " order(s).\n";
-
-    std::cout << "Final Order Status: ";
-
-    switch (order->getStatus())
-    {
-        case Status::Pending:
-            std::cout << "Pending";
-            break;
-
-        case Status::Approved:
-            std::cout << "Approved";
-            break;
-
-        case Status::InTruck:
-            std::cout << "InTruck";
-            break;
-
-        case Status::Delivered:
-            std::cout << "Delivered";
-            break;
-
-        case Status::Cancelled:
-            std::cout << "Cancelled";
-            break;
-    }
-
-    std::cout << '\n';
-
-    return 0;
 }
