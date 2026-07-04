@@ -20,4 +20,5 @@ public:
     bool addOrder(Order* order);
 
     const std::vector<Order*>& getOrders() const;
+    Order* deliverOrder(int orderID);
 };

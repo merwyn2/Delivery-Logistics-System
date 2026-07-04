@@ -94,3 +94,19 @@ Order* DeliveryManager::getOrder(int orderID)
 {
     return orderCatalog.getOrder(orderID);
 }
+
+bool DeliveryManager::completeDelivery(int orderID)
+{
+    for (Truck* truck : trucks)
+    {
+        Order* order = truck->deliverOrder(orderID);
+
+        if (order != nullptr)
+        {
+            orderCatalog.addOrder(order);
+            return true;
+        }
+    }
+
+    return false;
+}

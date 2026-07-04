@@ -43,6 +43,7 @@ public:
                       const std::string& contact,
                       const std::string& address);
     
-    Order* getOrder(int orderID);                  
-
+    Order* getOrder(int orderID);      
+                
+    bool completeDelivery(int orderID);
 };

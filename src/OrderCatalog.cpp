@@ -31,7 +31,6 @@ void OrderCatalog::addOrder(Order* order)
     }
     else
     {
-        delete it->second;
         it->second = order;
     }
 
