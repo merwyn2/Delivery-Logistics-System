@@ -37,14 +37,14 @@ Customer* DeliveryManager::getCustomer(int customerID)
     return customerCatalog.getCustomer(customerID);
 }
 
-bool DeliveryManager::placeOrder(Customer* customer,
-                                 const std::vector<OrderItem>& items)
+Order* DeliveryManager::placeOrder(Customer* customer,
+                                   const std::vector<OrderItem>& items)
 {
     // Check stock
     for (const auto& item : items)
     {
         if (!warehouse.hasStock(item.getProduct(), item.getQuantity()))
-            return false;
+            return nullptr;
     }
 
     // Remove stock
@@ -65,7 +65,7 @@ bool DeliveryManager::placeOrder(Customer* customer,
 
     orderCatalog.addOrder(order);
 
-    return true;
+    return order;
 }
 
 Product* DeliveryManager::getProduct(int productID)
@@ -109,4 +109,9 @@ bool DeliveryManager::completeDelivery(int orderID)
     }
 
     return false;
+}
+
+const Warehouse& DeliveryManager::getWarehouse() const
+{
+    return warehouse;
 }

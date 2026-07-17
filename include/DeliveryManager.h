@@ -29,8 +29,8 @@ public:
     void addCustomer(Customer* customer);
     void addTruck(Truck* truck);
 
-    bool placeOrder(Customer* customer,
-                    const std::vector<OrderItem>& items);
+    Order* placeOrder(Customer* customer,
+                  const std::vector<OrderItem>& items);
 
     void approveOrder(Order* order);
 
@@ -46,4 +46,6 @@ public:
     Order* getOrder(int orderID);      
                 
     bool completeDelivery(int orderID);
+
+    const Warehouse& getWarehouse() const;
 };

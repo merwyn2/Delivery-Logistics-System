@@ -75,3 +75,8 @@ void Warehouse::loadStock()
 
     in.close();
 }
+
+const std::unordered_map<int, int>& Warehouse::getStockMap() const
+{
+    return stock;
+}
